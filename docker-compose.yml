@@ -1,0 +1,21 @@
+---
+version: "3.1"
+services:
+  dcs-server:
+    build: .
+    image: dcs-world-desktop
+    container_name: dcs-server
+    environment:
+      - USER=dcsuser
+      - PASSWORD=yourpassword
+      - VNC_PASSWORD=yourpassword
+      - RESOLUTION=1920x1080
+    ports:
+      - 16612:80 - vnc access webui port
+      - 9443:443 - vnc access webui port ssl
+      - 16613:5900  - direct vnc if desired
+      - 10308:10308/tcp # dcs
+      - 10308:10308/udp # dcs
+    volumes:
+      - ./dcs_server:/home/dcsuser # dcs server files and config
+    restart: unless-stopped
